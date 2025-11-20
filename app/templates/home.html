@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-600 to-indigo-900 text-white">
+    
+    <div class="text-center space-y-8 p-6 max-w-2xl">
+        <h1 class="text-5xl md:text-7xl font-bold tracking-tight drop-shadow-lg">
+            Đồ án
+        </h1>
+        
+        <p class="text-lg md:text-xl text-blue-100 opacity-90">
+            Phân tích, đánh giá toàn diện hiệu quả bảo vệ của Vắc-xin COVID-19
+        </p>
+
+        <a href="/analytic" class="inline-block group relative px-8 py-4 bg-white text-indigo-700 font-bold rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+            <span class="relative z-10">Bắt đầu</span>
+            <div class="absolute inset-0 h-full w-full bg-indigo-50 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+        </a>
+    </div>
+
+    <footer class="absolute bottom-4 text-blue-200 text-sm">
+        &copy; Bản quyền thuộc Trường Đại học Bách khoa - ĐHQG-HCM
+    </footer>
+</div>
+{% endblock %}

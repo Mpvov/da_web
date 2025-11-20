@@ -1,0 +1,117 @@
+{% extends "analytic_base.html" %}
+
+{% block analytic_content %}
+<div class="max-w-3xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+    
+    <div class="bg-white shadow-xl rounded-2xl overflow-hidden">
+        <div class="bg-indigo-600 py-6 px-6">
+            <h2 class="text-2xl font-bold text-white">Dự đoán khả năng bùng phát dịch bệnh của một quốc gia
+trong 14 ngày tiếp theo</h2>
+            <p class="text-indigo-100 mt-1">Nhập dữ liệu để dự đoán</p>
+        </div>
+
+        <div class="p-8">
+            <form id="mlForm" class="space-y-6">
+                <div>
+                    <label for="input_text" class="block text-sm font-medium text-gray-700">Input</label>
+                    <div class="mt-1">
+                        <textarea 
+                            id="input_text" 
+                            name="input_text" 
+                            rows="3" 
+                            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md p-3" 
+                            placeholder="Type something to analyze..."></textarea>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="factor" class="block text-sm font-medium text-gray-700">Thay đổi tham số</label>
+                    <input 
+                        type="number" 
+                        name="factor" 
+                        id="factor" 
+                        value="1.5" 
+                        step="0.1" 
+                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border">
+                </div>
+
+                <div>
+                    <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+                        Đang chạy
+                    </button>
+                </div>
+            </form>
+
+            <!-- Result Box (Hidden by default) -->
+            <div id="resultBox" class="hidden mt-8 rounded-md bg-gray-50 border border-gray-200 p-6 animate-fade-in-up">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Output</h3>
+                <dl class="mt-4 grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">Prediction Score</dt>
+                        <dd class="mt-1 text-2xl font-semibold text-indigo-600" id="res_score">--</dd>
+                    </div>
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">Classification</dt>
+                        <dd class="mt-1 text-sm text-gray-900 font-semibold" id="res_analysis">--</dd>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <dt class="text-sm font-medium text-gray-500">Processed Input</dt>
+                        <dd class="mt-1 text-sm text-gray-900 italic" id="res_input">--</dd>
+                    </div>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('mlForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const inputText = document.getElementById('input_text').value;
+        const factor = parseFloat(document.getElementById('factor').value);
+        const btn = this.querySelector('button');
+        const originalText = btn.innerText;
+        
+        // Loading State
+        btn.innerText = "Processing...";
+        btn.disabled = true;
+        btn.classList.add('opacity-75');
+
+        try {
+            const response = await fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    input_text: inputText,
+                    numeric_factor: factor
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+
+            // Update UI
+            document.getElementById('res_score').innerText = data.prediction_score;
+            document.getElementById('res_analysis').innerText = data.analysis;
+            document.getElementById('res_input').innerText = data.input_received;
+            
+            const resultBox = document.getElementById('resultBox');
+            resultBox.classList.remove('hidden');
+            
+        } catch (error) {
+            alert('Error predicting: ' + error.message);
+        } finally {
+            // Reset Button
+            btn.innerText = originalText;
+            btn.disabled = false;
+            btn.classList.remove('opacity-75');
+        }
+    });
+</script>
+{% endblock %}

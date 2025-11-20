@@ -1,0 +1,16 @@
+{% extends "analytic_base.html" %}
+
+{% block analytic_content %}
+<!-- Updated: 'h-screen' makes it full viewport height since header is now overlay/hidden -->
+<div class="w-full flex flex-col bg-gray-100 h-screen">    
+    <!-- Power BI Embed Container -->
+    <div class="flex-grow w-full relative overflow-hidden">
+        <iframe 
+            title="Dashboard" 
+            class="absolute top-0 left-0 w-full h-full border-0"
+            src="https://app.powerbi.com/reportEmbed?reportId=675d8cb0-2267-4b01-aeec-24279f2ef21d&autoAuth=true&ctid=7bbbced8-b31a-4a36-95bb-9f06bc9d72a6" 
+            allowFullScreen="true">
+        </iframe>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="flex flex-col min-h-screen relative">
+    
+    <!-- HOVER TRIGGER (Only for Dashboard) -->
+    <!-- This invisible strip sits at the top. Hovering it triggers the nav below via 'peer-hover' -->
+    {% if active_tab == 'dashboard' %}
+    <div class="peer fixed top-0 left-0 w-full h-6 z-[60] bg-transparent"></div>
+    {% endif %}
+
+    <!-- Navigation Header -->
+    <!-- Logic: If dashboard, fixed + hidden by default. slides down on peer-hover (trigger) or self-hover. -->
+    <nav class="bg-white border-b border-gray-200 z-50 shadow-sm 
+        {% if active_tab == 'dashboard' %}
+            fixed top-0 w-full transition-transform duration-300 transform -translate-y-full peer-hover:translate-y-0 hover:translate-y-0
+        {% else %}
+            sticky top-0
+        {% endif %}
+    ">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Changed to relative + justify-center to center tabs, removed left logo -->
+            <div class="relative flex justify-center h-16">
+                
+                <!-- Centered Tabs -->
+                <div class="hidden sm:flex sm:space-x-8 h-full">
+                    {% set nav_class = "inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition duration-150 ease-in-out h-full" %}
+                    {% set active_class = "border-indigo-500 text-gray-900" %}
+                    {% set inactive_class = "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" %}
+
+                    <a href="/analytic/Blog" class="{{ nav_class }} {{ active_class if active_tab == 'blog' else inactive_class }}">
+                        Blog
+                    </a>
+                    <a href="/analytic/Dashboard" class="{{ nav_class }} {{ active_class if active_tab == 'dashboard' else inactive_class }}">
+                        Dashboard
+                    </a>
+                    <a href="/analytic/Machine_Learning" class="{{ nav_class }} {{ active_class if active_tab == 'ml' else inactive_class }}">
+                        Machine Learning
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button (Positioned absolute right to avoid messing up centering) -->
+                <div class="absolute right-0 flex items-center h-full sm:hidden">
+                    <button type="button" class="bg-white p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Specific Content -->
+    <!-- If Dashboard, we allow content to take full height behind the fixed header -->
+    <main class="flex-grow bg-gray-50">
+        {% block analytic_content %}
+        {% endblock %}
+    </main>
+
+</div>
+{% endblock %}
