@@ -11,8 +11,6 @@ MONGO_URI= <your-mongouri>
 
 pip install -r requirements.txt
 
-## Replace Mongodb connection (MONGO_DETAILS) in db_config.py
-
 ## Run
 uvicorn app.main:app --reload
 
