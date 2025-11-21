@@ -1,28 +1,18 @@
-# This file is for model Machine Learning
 from pydantic import BaseModel, Field
-from typing import Optional
 
 class PredictionInput(BaseModel):
-    input_text: str
-    numeric_factor: float = 1.0
+    country: str
+    current_avg_7d: float = Field(..., description="Current 7-day moving average cases")
+    last_week_avg_7d: float = Field(..., description="7-day moving average from 7 days ago")
+    two_weeks_ago_avg_7d: float = Field(..., description="7-day moving average from 14 days ago")
+    # We can calculate growth rates from the values above, 
+    # but if you want manual input, we can keep them. 
+    # Ideally, ML models calculate derived features automatically.
+    # For this demo, we will calculate growth inside the backend to save user effort.
 
 class PredictionOutput(BaseModel):
-    input_received: str
-    prediction_score: float
-    analysis: str
-
-class BlogPost(BaseModel):
-    title: str
-    content: str
-    author: str
-    date: str
-    
-    class Config:
-        json_schema_extra = {
-            "example": {
-                "title": "FastAPI is Awesome",
-                "content": "Here is why...",
-                "author": "Dev Team",
-                "date": "2023-10-27"
-            }
-        }
+    country: str
+    prediction_class: int # 0 or 1
+    prediction_label: str # "Normal" or "Outbreak"
+    probability: str # e.g. "85%"
+    explanation: str

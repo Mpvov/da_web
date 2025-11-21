@@ -1,116 +1,394 @@
 {% extends "analytic_base.html" %}
 
 {% block analytic_content %}
-<div class="max-w-3xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+<div class="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
     
-    <div class="bg-white shadow-xl rounded-2xl overflow-hidden">
-        <div class="bg-indigo-600 py-6 px-6">
-            <h2 class="text-2xl font-bold text-white">Dự đoán khả năng bùng phát dịch bệnh của một quốc gia
-trong 14 ngày tiếp theo</h2>
-            <p class="text-indigo-100 mt-1">Nhập dữ liệu để dự đoán</p>
+    <div class="bg-white shadow-xl rounded-2xl overflow-hidden flex flex-col md:flex-row">
+        
+        <!-- Left Side: Input Form -->
+        <div class="w-full md:w-1/2 p-8">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-900">Dự đoán khả năng bùng phát dịch COVID-19 theo quốc gia</h2>
+                <p class="text-sm text-gray-500 mt-1">Nhập dữ liệu vào bên dưới</p>
+            </div>
+
+            <form id="mlForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Quốc gia</label>
+                    <!-- CHANGED: Input text to Select -->
+                    <select id="country" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border p-2 bg-white">
+                        <option value="Afghanistan">Afghanistan</option>
+                        <option value="Albania">Albania</option>
+                        <option value="Algeria">Algeria</option>
+                        <option value="Andorra">Andorra</option>
+                        <option value="Angola">Angola</option>
+                        <option value="Anguilla">Anguilla</option>
+                        <option value="Antigua and Barbuda">Antigua and Barbuda</option>
+                        <option value="Argentina">Argentina</option>
+                        <option value="Armenia">Armenia</option>
+                        <option value="Aruba">Aruba</option>
+                        <option value="Australia">Australia</option>
+                        <option value="Austria">Austria</option>
+                        <option value="Azerbaijan">Azerbaijan</option>
+                        <option value="Bahamas">Bahamas</option>
+                        <option value="Bahrain">Bahrain</option>
+                        <option value="Bangladesh">Bangladesh</option>
+                        <option value="Barbados">Barbados</option>
+                        <option value="Belarus">Belarus</option>
+                        <option value="Belgium">Belgium</option>
+                        <option value="Belize">Belize</option>
+                        <option value="Benin">Benin</option>
+                        <option value="Bermuda">Bermuda</option>
+                        <option value="Bhutan">Bhutan</option>
+                        <option value="Bolivia">Bolivia</option>
+                        <option value="Bosnia">Bosnia</option>
+                        <option value="Botswana">Botswana</option>
+                        <option value="Brazil">Brazil</option>
+                        <option value="British Virgin Islands">British Virgin Islands</option>
+                        <option value="Brunei">Brunei</option>
+                        <option value="Bulgaria">Bulgaria</option>
+                        <option value="Burkina Faso">Burkina Faso</option>
+                        <option value="Burundi">Burundi</option>
+                        <option value="Cabo Verde">Cabo Verde</option>
+                        <option value="Cambodia">Cambodia</option>
+                        <option value="Cameroon">Cameroon</option>
+                        <option value="Canada">Canada</option>
+                        <option value="Caribbean Netherlands">Caribbean Netherlands</option>
+                        <option value="Cayman Islands">Cayman Islands</option>
+                        <option value="Central African Republic">Central African Republic</option>
+                        <option value="Chad">Chad</option>
+                        <option value="Channel Islands">Channel Islands</option>
+                        <option value="Chile">Chile</option>
+                        <option value="China">China</option>
+                        <option value="Colombia">Colombia</option>
+                        <option value="Comoros">Comoros</option>
+                        <option value="Congo">Congo</option>
+                        <option value="Cook Islands">Cook Islands</option>
+                        <option value="Costa Rica">Costa Rica</option>
+                        <option value="Croatia">Croatia</option>
+                        <option value="Cuba">Cuba</option>
+                        <option value="Curaçao">Curaçao</option>
+                        <option value="Cyprus">Cyprus</option>
+                        <option value="Czechia">Czechia</option>
+                        <option value="Côte d'Ivoire">Côte d'Ivoire</option>
+                        <option value="DRC">DRC</option>
+                        <option value="Denmark">Denmark</option>
+                        <option value="Diamond Princess">Diamond Princess</option>
+                        <option value="Djibouti">Djibouti</option>
+                        <option value="Dominica">Dominica</option>
+                        <option value="Dominican Republic">Dominican Republic</option>
+                        <option value="Ecuador">Ecuador</option>
+                        <option value="Egypt">Egypt</option>
+                        <option value="El Salvador">El Salvador</option>
+                        <option value="Equatorial Guinea">Equatorial Guinea</option>
+                        <option value="Eritrea">Eritrea</option>
+                        <option value="Estonia">Estonia</option>
+                        <option value="Ethiopia">Ethiopia</option>
+                        <option value="Falkland Islands (Malvinas)">Falkland Islands (Malvinas)</option>
+                        <option value="Faroe Islands">Faroe Islands</option>
+                        <option value="Fiji">Fiji</option>
+                        <option value="Finland">Finland</option>
+                        <option value="France">France</option>
+                        <option value="French Guiana">French Guiana</option>
+                        <option value="French Polynesia">French Polynesia</option>
+                        <option value="Gabon">Gabon</option>
+                        <option value="Gambia">Gambia</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Germany">Germany</option>
+                        <option value="Ghana">Ghana</option>
+                        <option value="Gibraltar">Gibraltar</option>
+                        <option value="Greece">Greece</option>
+                        <option value="Greenland">Greenland</option>
+                        <option value="Grenada">Grenada</option>
+                        <option value="Guadeloupe">Guadeloupe</option>
+                        <option value="Guatemala">Guatemala</option>
+                        <option value="Guinea">Guinea</option>
+                        <option value="Guinea-Bissau">Guinea-Bissau</option>
+                        <option value="Guyana">Guyana</option>
+                        <option value="Haiti">Haiti</option>
+                        <option value="Holy See (Vatican City State)">Holy See (Vatican City State)</option>
+                        <option value="Honduras">Honduras</option>
+                        <option value="Hong Kong">Hong Kong</option>
+                        <option value="Hungary">Hungary</option>
+                        <option value="Iceland">Iceland</option>
+                        <option value="India">India</option>
+                        <option value="Indonesia">Indonesia</option>
+                        <option value="Iran">Iran</option>
+                        <option value="Iraq">Iraq</option>
+                        <option value="Ireland">Ireland</option>
+                        <option value="Isle of Man">Isle of Man</option>
+                        <option value="Israel">Israel</option>
+                        <option value="Italy">Italy</option>
+                        <option value="Jamaica">Jamaica</option>
+                        <option value="Japan">Japan</option>
+                        <option value="Jordan">Jordan</option>
+                        <option value="Kazakhstan">Kazakhstan</option>
+                        <option value="Kenya">Kenya</option>
+                        <option value="Kiribati">Kiribati</option>
+                        <option value="Kuwait">Kuwait</option>
+                        <option value="Kyrgyzstan">Kyrgyzstan</option>
+                        <option value="Lao People's Democratic Republic">Lao People's Democratic Republic</option>
+                        <option value="Latvia">Latvia</option>
+                        <option value="Lebanon">Lebanon</option>
+                        <option value="Lesotho">Lesotho</option>
+                        <option value="Liberia">Liberia</option>
+                        <option value="Libyan Arab Jamahiriya">Libyan Arab Jamahiriya</option>
+                        <option value="Liechtenstein">Liechtenstein</option>
+                        <option value="Lithuania">Lithuania</option>
+                        <option value="Luxembourg">Luxembourg</option>
+                        <option value="MS Zaandam">MS Zaandam</option>
+                        <option value="Macao">Macao</option>
+                        <option value="Macedonia">Macedonia</option>
+                        <option value="Madagascar">Madagascar</option>
+                        <option value="Malawi">Malawi</option>
+                        <option value="Malaysia">Malaysia</option>
+                        <option value="Maldives">Maldives</option>
+                        <option value="Mali">Mali</option>
+                        <option value="Malta">Malta</option>
+                        <option value="Marshall Islands">Marshall Islands</option>
+                        <option value="Martinique">Martinique</option>
+                        <option value="Mauritania">Mauritania</option>
+                        <option value="Mauritius">Mauritius</option>
+                        <option value="Mayotte">Mayotte</option>
+                        <option value="Mexico">Mexico</option>
+                        <option value="Micronesia">Micronesia</option>
+                        <option value="Moldova">Moldova</option>
+                        <option value="Monaco">Monaco</option>
+                        <option value="Mongolia">Mongolia</option>
+                        <option value="Montenegro">Montenegro</option>
+                        <option value="Montserrat">Montserrat</option>
+                        <option value="Morocco">Morocco</option>
+                        <option value="Mozambique">Mozambique</option>
+                        <option value="Myanmar">Myanmar</option>
+                        <option value="N. Korea">N. Korea</option>
+                        <option value="Namibia">Namibia</option>
+                        <option value="Nauru">Nauru</option>
+                        <option value="Nepal">Nepal</option>
+                        <option value="Netherlands">Netherlands</option>
+                        <option value="New Caledonia">New Caledonia</option>
+                        <option value="New Zealand">New Zealand</option>
+                        <option value="Nicaragua">Nicaragua</option>
+                        <option value="Niger">Niger</option>
+                        <option value="Nigeria">Nigeria</option>
+                        <option value="Niue">Niue</option>
+                        <option value="Norway">Norway</option>
+                        <option value="Oman">Oman</option>
+                        <option value="Pakistan">Pakistan</option>
+                        <option value="Palau">Palau</option>
+                        <option value="Palestine">Palestine</option>
+                        <option value="Panama">Panama</option>
+                        <option value="Papua New Guinea">Papua New Guinea</option>
+                        <option value="Paraguay">Paraguay</option>
+                        <option value="Peru">Peru</option>
+                        <option value="Philippines">Philippines</option>
+                        <option value="Poland">Poland</option>
+                        <option value="Portugal">Portugal</option>
+                        <option value="Qatar">Qatar</option>
+                        <option value="Romania">Romania</option>
+                        <option value="Russia">Russia</option>
+                        <option value="Rwanda">Rwanda</option>
+                        <option value="Réunion">Réunion</option>
+                        <option value="S. Korea">S. Korea</option>
+                        <option value="Saint Helena">Saint Helena</option>
+                        <option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
+                        <option value="Saint Lucia">Saint Lucia</option>
+                        <option value="Saint Martin">Saint Martin</option>
+                        <option value="Saint Pierre Miquelon">Saint Pierre Miquelon</option>
+                        <option value="Saint Vincent and the Grenadines">Saint Vincent and the Grenadines</option>
+                        <option value="Samoa">Samoa</option>
+                        <option value="San Marino">San Marino</option>
+                        <option value="Sao Tome and Principe">Sao Tome and Principe</option>
+                        <option value="Saudi Arabia">Saudi Arabia</option>
+                        <option value="Senegal">Senegal</option>
+                        <option value="Serbia">Serbia</option>
+                        <option value="Seychelles">Seychelles</option>
+                        <option value="Sierra Leone">Sierra Leone</option>
+                        <option value="Singapore">Singapore</option>
+                        <option value="Sint Maarten">Sint Maarten</option>
+                        <option value="Slovakia">Slovakia</option>
+                        <option value="Slovenia">Slovenia</option>
+                        <option value="Solomon Islands">Solomon Islands</option>
+                        <option value="Somalia">Somalia</option>
+                        <option value="South Africa">South Africa</option>
+                        <option value="South Sudan">South Sudan</option>
+                        <option value="Spain">Spain</option>
+                        <option value="Sri Lanka">Sri Lanka</option>
+                        <option value="St. Barth">St. Barth</option>
+                        <option value="Sudan">Sudan</option>
+                        <option value="Suriname">Suriname</option>
+                        <option value="Swaziland">Swaziland</option>
+                        <option value="Sweden">Sweden</option>
+                        <option value="Switzerland">Switzerland</option>
+                        <option value="Syrian Arab Republic">Syrian Arab Republic</option>
+                        <option value="Taiwan">Taiwan</option>
+                        <option value="Tajikistan">Tajikistan</option>
+                        <option value="Tanzania">Tanzania</option>
+                        <option value="Thailand">Thailand</option>
+                        <option value="Timor-Leste">Timor-Leste</option>
+                        <option value="Togo">Togo</option>
+                        <option value="Tokelau">Tokelau</option>
+                        <option value="Tonga">Tonga</option>
+                        <option value="Trinidad and Tobago">Trinidad and Tobago</option>
+                        <option value="Tunisia">Tunisia</option>
+                        <option value="Turkey">Turkey</option>
+                        <option value="Turks and Caicos Islands">Turks and Caicos Islands</option>
+                        <option value="Tuvalu">Tuvalu</option>
+                        <option value="UAE">UAE</option>
+                        <option value="UK">UK</option>
+                        <option value="USA">USA</option>
+                        <option value="Uganda">Uganda</option>
+                        <option value="Ukraine">Ukraine</option>
+                        <option value="Uruguay">Uruguay</option>
+                        <option value="Uzbekistan">Uzbekistan</option>
+                        <option value="Vanuatu">Vanuatu</option>
+                        <option value="Venezuela">Venezuela</option>
+                        <option value="Vietnam" selected>Vietnam</option>
+                        <option value="Wallis and Futuna">Wallis and Futuna</option>
+                        <option value="Western Sahara">Western Sahara</option>
+                        <option value="Yemen">Yemen</option>
+                        <option value="Zambia">Zambia</option>
+                        <option value="Zimbabwe">Zimbabwe</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Trung bình số ca hiện tại (tính theo 7 ngày)</label>
+                    <input type="number" id="current_avg" step="0.1" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2" placeholder="e.g., 100">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Dữ liệu số ca mắc tuần trước</label>
+                        <input type="number" id="lag_7" step="0.1" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2" placeholder="e.g., 80">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Dữ liệu số ca mắc 2 tuần trước</label>
+                        <input type="number" id="lag_14" step="0.1" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2" placeholder="e.g., 50">
+                    </div>
+                </div>
+
+                <!-- Auto-calculated display -->
+                <div class="bg-gray-50 p-3 rounded text-xs text-gray-600 space-y-1">
+                    <div class="flex justify-between">
+                        <span>Tăng (7d):</span>
+                        <span id="disp_growth_7d" class="font-mono">--</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Tăng (14d):</span>
+                        <span id="disp_growth_14d" class="font-mono">--</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition-colors">
+                    Dự đoán
+                </button>
+            </form>
         </div>
 
-        <div class="p-8">
-            <form id="mlForm" class="space-y-6">
-                <div>
-                    <label for="input_text" class="block text-sm font-medium text-gray-700">Input</label>
-                    <div class="mt-1">
-                        <textarea 
-                            id="input_text" 
-                            name="input_text" 
-                            rows="3" 
-                            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md p-3" 
-                            placeholder="Type something to analyze..."></textarea>
-                    </div>
+        <!-- Right Side: Result -->
+        <div class="w-full md:w-1/2 bg-indigo-900 text-white p-8 flex flex-col justify-center relative overflow-hidden">
+            <!-- Background decoration -->
+            <div class="absolute top-0 right-0 -mr-10 -mt-10 w-40 h-40 rounded-full bg-indigo-800 opacity-50"></div>
+            
+            <div id="initialState" class="text-center opacity-75">
+                <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                <p>Nhập dữ liệu và nhấn dự đoán để xem phân tích</p>
+            </div>
+
+            <div id="resultBox" class="hidden relative z-10">
+                <h3 class="text-indigo-300 text-sm font-bold uppercase tracking-wider mb-1">Kết quả dự đoán</h3>
+                <div class="flex items-baseline space-x-3 mb-4">
+                    <span id="res_class" class="text-5xl font-bold">--</span>
+                    <span id="res_label" class="text-2xl font-light opacity-90">--</span>
+                </div>
+                
+                <div class="bg-indigo-800 bg-opacity-50 rounded p-4 mb-4 border border-indigo-700">
+                    <p id="res_explanation" class="text-sm leading-relaxed italic">--</p>
                 </div>
 
-                <div>
-                    <label for="factor" class="block text-sm font-medium text-gray-700">Thay đổi tham số</label>
-                    <input 
-                        type="number" 
-                        name="factor" 
-                        id="factor" 
-                        value="1.5" 
-                        step="0.1" 
-                        class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border">
+                <div class="flex justify-between items-center text-sm text-indigo-200">
+                    <span>Phần trăm tỉ lệ dịch bùng phát:</span>
+                    <span id="res_prob" class="font-bold text-white">--</span>
                 </div>
-
-                <div>
-                    <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
-                        Đang chạy
-                    </button>
-                </div>
-            </form>
-
-            <!-- Result Box (Hidden by default) -->
-            <div id="resultBox" class="hidden mt-8 rounded-md bg-gray-50 border border-gray-200 p-6 animate-fade-in-up">
-                <h3 class="text-lg leading-6 font-medium text-gray-900">Output</h3>
-                <dl class="mt-4 grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
-                    <div class="sm:col-span-1">
-                        <dt class="text-sm font-medium text-gray-500">Prediction Score</dt>
-                        <dd class="mt-1 text-2xl font-semibold text-indigo-600" id="res_score">--</dd>
-                    </div>
-                    <div class="sm:col-span-1">
-                        <dt class="text-sm font-medium text-gray-500">Classification</dt>
-                        <dd class="mt-1 text-sm text-gray-900 font-semibold" id="res_analysis">--</dd>
-                    </div>
-                    <div class="sm:col-span-2">
-                        <dt class="text-sm font-medium text-gray-500">Processed Input</dt>
-                        <dd class="mt-1 text-sm text-gray-900 italic" id="res_input">--</dd>
-                    </div>
-                </dl>
             </div>
         </div>
     </div>
 </div>
 
 <script>
+    // Auto calculate growth for display
+    const inputs = ['current_avg', 'lag_7', 'lag_14'];
+    inputs.forEach(id => {
+        document.getElementById(id).addEventListener('input', calculateGrowth);
+    });
+
+    function calculateGrowth() {
+        const cur = parseFloat(document.getElementById('current_avg').value) || 0;
+        const l7 = parseFloat(document.getElementById('lag_7').value) || 0;
+        const l14 = parseFloat(document.getElementById('lag_14').value) || 0;
+        
+        const g7 = cur - l7;
+        const g14 = cur - l14;
+
+        const setGrowth = (id, val) => {
+            const el = document.getElementById(id);
+            el.innerText = (val > 0 ? '+' : '') + val.toFixed(1);
+            el.className = val > 0 ? 'font-mono text-red-600 font-bold' : 'font-mono text-green-600 font-bold';
+        };
+
+        setGrowth('disp_growth_7d', g7);
+        setGrowth('disp_growth_14d', g14);
+    }
+
+    // Handle Submission
     document.getElementById('mlForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        const inputText = document.getElementById('input_text').value;
-        const factor = parseFloat(document.getElementById('factor').value);
         const btn = this.querySelector('button');
         const originalText = btn.innerText;
-        
-        // Loading State
-        btn.innerText = "Processing...";
+        btn.innerText = "Analyzing...";
         btn.disabled = true;
-        btn.classList.add('opacity-75');
 
         try {
+            const payload = {
+                country: document.getElementById('country').value,
+                current_avg_7d: parseFloat(document.getElementById('current_avg').value),
+                last_week_avg_7d: parseFloat(document.getElementById('lag_7').value),
+                two_weeks_ago_avg_7d: parseFloat(document.getElementById('lag_14').value)
+            };
+
             const response = await fetch('/predict', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    input_text: inputText,
-                    numeric_factor: factor
-                }),
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(payload),
             });
-
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
 
             const data = await response.json();
 
-            // Update UI
-            document.getElementById('res_score').innerText = data.prediction_score;
-            document.getElementById('res_analysis').innerText = data.analysis;
-            document.getElementById('res_input').innerText = data.input_received;
-            
-            const resultBox = document.getElementById('resultBox');
-            resultBox.classList.remove('hidden');
-            
+            // UI Update
+            document.getElementById('initialState').classList.add('hidden');
+            document.getElementById('resultBox').classList.remove('hidden');
+
+            document.getElementById('res_class').innerText = data.prediction_class;
+            document.getElementById('res_label').innerText = `(${data.prediction_label})`;
+            document.getElementById('res_explanation').innerText = data.explanation;
+            document.getElementById('res_prob').innerText = data.probability;
+
+            // Color coding
+            const resClass = document.getElementById('res_class');
+            if(data.prediction_class === 1) {
+                resClass.classList.add('text-red-400');
+                resClass.classList.remove('text-green-400');
+            } else {
+                resClass.classList.add('text-green-400');
+                resClass.classList.remove('text-red-400');
+            }
+
         } catch (error) {
-            alert('Error predicting: ' + error.message);
+            alert('Error: ' + error.message);
         } finally {
-            // Reset Button
             btn.innerText = originalText;
             btn.disabled = false;
-            btn.classList.remove('opacity-75');
         }
     });
 </script>

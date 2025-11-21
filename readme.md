@@ -5,7 +5,7 @@ python -m venv venv
 
 venv\Scripts\activate #for window
 ## Create variable enviroment
-create .env contain
+create .env file contain
 MONGO_URI= <your-mongouri>
 ## Install Requirements
 

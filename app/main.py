@@ -3,14 +3,12 @@ from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, RedirectResponse
 from app.models.schemas import PredictionInput, PredictionOutput
+from app.ml_engine import predictor 
 import random
 
 app = FastAPI(title="FastAPI Analytics Platform")
 
-# Setup Templates
 templates = Jinja2Templates(directory="app/templates")
-
-# Mount Static Files (CSS/JS/Images)
 app.mount("/static", StaticFiles(directory="app/templates"), name="static")
 
 # --- API Logic ---
@@ -18,15 +16,22 @@ app.mount("/static", StaticFiles(directory="app/templates"), name="static")
 @app.post("/predict", response_model=PredictionOutput)
 async def predict_model(data: PredictionInput):
     """
-    Dummy ML Endpoint.
+    Real ML Endpoint using the OutbreakPredictor class.
     """
-    score = len(data.input_text) * data.numeric_factor * random.uniform(0.8, 1.2)
-    analysis_result = "Positive" if score > 20 else "Neutral"
+    # CHANGED: We now pass data.country to the predictor
+    result = predictor.predict(
+        country=data.country,
+        current=data.current_avg_7d,
+        lag_7=data.last_week_avg_7d,
+        lag_14=data.two_weeks_ago_avg_7d
+    )
     
     return {
-        "input_received": data.input_text,
-        "prediction_score": round(score, 2),
-        "analysis": analysis_result
+        "country": data.country,
+        "prediction_class": result["prediction_class"],
+        "prediction_label": result["prediction_label"],
+        "probability": result["probability"],
+        "explanation": result["explanation"]
     }
 
 # --- Page Routes ---
@@ -45,28 +50,27 @@ async def analytic_root():
 
 @app.get("/analytic/Blog", response_class=HTMLResponse)
 async def analytic_blog(request: Request):
-    # STATIC DATA - No Database Connection needed
+    # STATIC DATA
     blogs = [
         {
             "title": "Understanding FastAPI", 
-            "content": "FastAPI is a modern, fast (high-performance), web framework for building APIs with Python 3.7+ based on standard Python type hints.", 
+            "content": "FastAPI is a modern, fast (high-performance), web framework for building APIs with Python 3.7+.", 
             "date": "Oct 2023", 
             "author": "Admin"
         },
         {
             "title": "The Power of Static Content", 
-            "content": "Sometimes you don't need a database. Static content is faster to load, easier to cache, and much simpler to deploy.", 
+            "content": "Sometimes you don't need a database. Static content is faster to load.", 
             "date": "Nov 2023", 
             "author": "Editor"
         },
         {
             "title": "Machine Learning Integration", 
-            "content": " integrating ML models into web apps allows for real-time predictions and smarter user interactions.", 
+            "content": "Integrating ML models into web apps allows for real-time predictions.", 
             "date": "Dec 2023", 
             "author": "AI Team"
         }
     ]
-
     return templates.TemplateResponse("blog.html", {
         "request": request, 
         "active_tab": "blog",
@@ -75,11 +79,8 @@ async def analytic_blog(request: Request):
 
 @app.get("/analytic/Dashboard", response_class=HTMLResponse)
 async def analytic_dashboard(request: Request):
-    # UPDATED URL: Added &navContentPaneEnabled=false to hide left bars
-    # Added &fitToWidth=true to try and force fit
     base_url = "https://app.powerbi.com/reportEmbed?reportId=675d8cb0-2267-4b01-aeec-24279f2ef21d&autoAuth=true&ctid=7bbbced8-b31a-4a36-95bb-9f06bc9d72a6&actionBarEnabled=true"
     powerbi_url = f"{base_url}&navContentPaneEnabled=false"
-    
     return templates.TemplateResponse("dashboard.html", {
         "request": request, 
         "active_tab": "dashboard",
