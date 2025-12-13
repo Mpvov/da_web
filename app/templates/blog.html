@@ -6,11 +6,11 @@
     
     <!-- Header Bài Viết -->
     <div class="border-b border-gray-200 pb-8 mb-10">
-        <h1 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4 leading-tight">
-            Phân tích Xu hướng COVID-19 và Hiệu quả Tiêm chủng
+        <h1 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4 leading-tight" >
+            Phân tích xu hướng của COVID-19 và hiệu quả tiêm chủng
         </h1>
         <p class="text-lg text-gray-600 italic font-serif">
-            Tác giả: ..
+            Tác giả: Nguyễn Đỗ Minh Quân, Huỳnh Hữu Nhật, Đoàn Nguyễn Nhật Vy, Nguyễn Miên Phú
         </p>
     </div>
 
@@ -19,7 +19,7 @@
 
         <!-- Phần 1: Xu hướng dịch bệnh -->
         <section>
-            <h2 class="text-3xl font-serif font-bold text-gray-900 mb-4">1. Xu hướng dịch bệnh</h2>
+            <h2 class="text-3xl font-serif font-bold text-gray-900 mb-4" style="font-family: 'Times New Roman', Times, serif;">1. Xu hướng dịch bệnh</h2>
             <p class="mb-4">
                 Để xem xét xu hướng dịch bệnh, ta cần có các số liệu liên quan đến số ca nhiễm mới, số ca tử vong hàng ngày. Do dữ liệu tích lũy, ta tính số liệu hàng ngày bằng cách lấy chênh lệch với ngày hôm trước. Dữ liệu về COVID-19 bị nhiễu nhiều (thời gian cuối tuần, báo cáo trễ), ta cần làm mịn dữ liệu bằng cách <code class="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">rolling().mean()</code> với giá trị 7 ngày.
             </p>
@@ -27,7 +27,7 @@
             <!-- Hình 1 -->
             <figure class="my-8">
                 <img src="{{ url_for('static', path='images/avg new case 7d.png') }}" alt="Biểu đồ số ca nhiễm hàng ngày" class="w-full h-auto rounded-sm shadow-sm border border-gray-100">
-                <figcaption class="text-center text-sm text-gray-500 mt-2 italic font-serif">Biểu đồ số ca nhiễm hàng ngày</figcaption>
+                <figcaption>Biểu đồ số ca nhiễm hàng ngày</figcaption>
             </figure>
 
             <ul class="list-disc list-outside ml-5 space-y-2 mb-8">
@@ -39,7 +39,7 @@
             <!-- Hình 2 -->
             <figure class="my-8">
                 <img src="{{ url_for('static', path='images/avg new death 7d.png') }}" alt="Biểu đồ số ca tử vong hàng ngày" class="w-full h-auto rounded-sm shadow-sm border border-gray-100">
-                <figcaption class="text-center text-sm text-gray-500 mt-2 italic font-serif">Biểu đồ số ca tử vong hàng ngày</figcaption>
+                <figcaption>Biểu đồ số ca tử vong hàng ngày</figcaption>
             </figure>
 
             <ul class="list-disc list-outside ml-5 space-y-2 mb-8">
@@ -54,7 +54,7 @@
             <!-- Hình 3 -->
             <figure class="my-8">
                 <img src="{{ url_for('static', path='images/growth speed 7d.png') }}" alt="Biểu đồ tốc độ tăng trưởng hàng ngày" class="w-full h-auto rounded-sm shadow-sm border border-gray-100">
-                <figcaption class="text-center text-sm text-gray-500 mt-2 italic font-serif">Biểu đồ tốc độ tăng trưởng hàng ngày</figcaption>
+                <figcaption>Biểu đồ tốc độ tăng trưởng hàng ngày</figcaption>
             </figure>
 
             <ul class="list-disc list-outside ml-5 space-y-2 mb-8">
@@ -67,13 +67,13 @@
 
         <!-- Phần 2: Xu hướng tiêm chủng -->
         <section>
-            <h2 class="text-3xl font-serif font-bold text-gray-900 mb-4">2. Xu hướng tiêm chủng</h2>
+            <h2 class="text-3xl font-serif font-bold text-gray-900 mb-4" style="font-family: 'Times New Roman', Times, serif;">2. Xu hướng tiêm chủng</h2>
             
-            <h3 class="text-2xl font-serif font-semibold text-gray-800 mt-6 mb-3">2.1 Tiến độ tiêm chủng</h3>
+            <h3 class="text-2xl font-serif font-semibold text-gray-800 mt-6 mb-3" style="font-family: 'Times New Roman', Times, serif;">2.1 Tiến độ tiêm chủng</h3>
             
             <figure class="my-8">
                 <img src="{{ url_for('static', path='images/daily vaccinated.png') }}" alt="Biểu đồ số lượt tiêm hàng ngày" class="w-full h-auto rounded-sm shadow-sm border border-gray-100">
-                <figcaption class="text-center text-sm text-gray-500 mt-2 italic font-serif">Biểu đồ số lượt tiêm hàng ngày</figcaption>
+                <figcaption>Biểu đồ số lượt tiêm hàng ngày</figcaption>
             </figure>
 
             <ul class="list-disc list-outside ml-5 space-y-2 mb-8">
@@ -88,16 +88,64 @@
                 <li class="mt-2"><strong>Hiệu suất:</strong> Đồ thị cho thấy chiến dịch đã có khoảng thời gian hoạt động cao độ để nhanh chóng bao phủ dân số. Sự suy giảm mạnh sau đỉnh cho thấy hoạt động tiêm chủng đã chuyển từ giai đoạn tiêm chủng đại trà sang giai đoạn tiêm duy trì, bổ sung.</li>
             </ul>
 
-            <h3 class="text-2xl font-serif font-semibold text-gray-800 mt-6 mb-3">2.2 Mức độ bao phủ vắc-xin</h3>
-            <p class="text-gray-500 italic">(Nội dung đang cập nhật)</p>
+            <h3 class="text-2xl font-serif font-semibold text-gray-800 mt-6 mb-3" style="font-family: 'Times New Roman', Times, serif;">2.2 Mức độ bao phủ vắc-xin</h3>
+            
+            <figure class="my-8">
+                <img src="{{ url_for('static', path='images/coverage_map.png') }}" alt="Mức độ bao phủ vắc-xin trên toàn thế giới tính đến năm 2024" class="w-full h-auto rounded-sm shadow-sm border border-gray-100">
+                <figcaption>Mức độ bao phủ vắc-xin trên toàn thế giới tính đến năm 2024</figcaption>
+            </figure>
 
-            <h3 class="text-2xl font-serif font-semibold text-gray-800 mt-6 mb-3">2.3 So sánh hiệu suất tiêm</h3>
-            <p class="text-gray-500 italic">(Nội dung đang cập nhật)</p>
+            <p class="mb-4">
+                Bản đồ phân bố vaccine toàn cầu phản ánh rõ nét sự bất bình đẳng trong giai đoạn đầu và những nỗ lực thu hẹp khoảng cách trong giai đoạn sau. Bức tranh này được chia thành các gam màu tương phản giữa các khu vực địa lý:
+            </p>
+
+            <ul class="list-disc list-outside ml-5 space-y-2 mb-8">
+                <li><strong>Châu Phi - "Vùng trũng" của bản đồ tiêm chủng:</strong> Đây là khu vực có màu sắc nhạt nhất (màu đỏ) trên bản đồ, phản ánh tỷ lệ bao phủ thấp nhất thế giới. Các quốc gia như CHDC Congo, Nam Sudan hay Chad gặp thách thức lớn về chuỗi cung ứng lạnh và cơ sở hạ tầng y tế. Dù tỷ lệ đã được cải thiện đáng kể vào năm 2024 (như Congo đạt ~14.5% so với mức <1% năm 2022) nhờ lồng ghép vào tiêm chủng mở rộng, nhưng khoảng cách so với mức trung bình thế giới vẫn còn rất xa.</li>
+                <li><strong>Tây Âu, Bắc Mỹ và Úc - Nhóm dẫn đầu ổn định:</strong> Các khu vực này luôn duy trì sắc độ đậm nhất (tỷ lệ >80%), đại diện cho nhóm quốc gia phát triển với khả năng tiếp cận vaccine sớm và hệ thống y tế hoàn thiện. Bồ Đào Nha, Canada hay Tây Ban Nha là những ví dụ điển hình cho sự thành công trong việc đạt ngưỡng miễn dịch cộng đồng từ rất sớm.</li>
+                <li><strong>Đông Nam Á và Châu Á Thái Bình Dương - Sự bứt phá ngoạn mục:</strong> Từ điểm xuất phát chậm hơn phương Tây, khu vực này đã có tốc độ tăng trưởng thần tốc. Các quốc gia như Việt Nam, Singapore, Campuchia đã thực hiện các chiến dịch tiêm chủng quy mô lớn, đưa tỷ lệ bao phủ lên nhóm cao hàng đầu thế giới, vượt qua cả nhiều nước châu Âu.</li>
+                <li><strong>Đông Âu và Liên Bang Nga - Khoảng trống bất ngờ:</strong> Mặc dù có năng lực sản xuất vaccine, khu vực này lại hiển thị tỷ lệ thấp hơn so với các nước láng giềng phía Tây. Nguyên nhân chủ yếu đến từ tâm lý ngần ngại vaccine (vaccine hesitancy) của người dân, khiến độ bao phủ ở nhiều nước chỉ dừng ở mức trung bình (khoảng 60-70%).</li>
+            </ul>
+
+            <p class="mb-4">
+                Bên cạnh đó, nhóm cũng đưa ra nhóm 20 nước dẫn đầu về mức độ bao phủ vắc-xin bên dưới (biểu đồ đã được filter với các quốc gia có dân số trên 10 triệu người):
+            </p>
+
+            <figure class="my-8">
+                <img src="{{ url_for('static', path='images/rank20_coverage.png') }}" alt="Top 20 các quốc gia có độ bao phủ vắc-xin lớn nhất" class="w-full h-auto rounded-sm shadow-sm border border-gray-100">
+                <figcaption>Top 20 các quốc gia có độ bao phủ vắc-xin lớn nhất</figcaption>
+            </figure>
+
+            <p class="mb-4">Dựa vào bảng xếp hạng trên, nhóm có một số đánh giá như sau:</p>
+
+            <ul class="list-disc list-outside ml-5 space-y-2 mb-8">
+                <li>Các nước ở khu vực châu Á và Nam Mỹ chiếm ưu thế và hầu như nằm trong top 10. Việt Nam chúng ta vinh dự được xếp hạng 5 trong bảng xếp hạng này là một minh chứng rõ nét nhất cho khả năng huy động nguồn lực xã hội cực lớn để thực hiện các chiến dịch phòng ngừa dịch bệnh Covid-19. Trung Quốc (hạng 3) cũng là một quốc gia có khả năng huy động nguồn lực lớn dù theo báo chí đây là nơi xảy ra nguồn dịch. Chile và Cuba đều dẫn đầu trong bảng xếp hạng này. Trong đó, Cuba đặc biệt ấn tượng vì họ đạt được điều này chủ yếu bằng các vắc-xin tự sản xuất (Ablada, Soberana) trong điều kiện bị cấm vận.</li>
+                <li>Các nước như Bồ Đào Nha, Tây Ban Nha, Hàn Quốc, Nhật Bản nắm vững vị thế của mình. Họ có điểm chung đó là hệ thống y tế công cộng rất vững chắc và niềm tin người dân vào khoa học cao.</li>
+                <li>Cũng trong bảng xếp hạng này, một điều bất ngờ rằng các nước đang phát triển như Campuchia (hạng 4) hay Bangladesh (hạng 12), dù GDP không cao, nhưng nhờ tận dụng tốt nguồn vắc-xin viện trợ và ngoại giao, cộng với hệ thống y tế cơ sở linh hoạt, họ đã vượt qua nhiều nước giàu có phương Tây.</li>
+            </ul>
+
+            <p class="mb-8">
+                Một số quốc gia có tiềm lực về kinh tế, kỹ thuật y tế nhưng không có mặt trong bảng xếp hạng trên. Lý do có lẽ họ đối mặt thách thức về quy mô dân số như Ấn Độ, hay rào cản lớn về chính trị như Mỹ. Chính vì thế, sức mạnh kinh tế hay năng lực sản xuất vắc-xin không đồng nghĩa với tỷ lệ bao phủ cao. Các yếu tố như sự tin tưởng của người dân, thể chế chính trị và quy mô dân số mới là yếu tố quyết định thứ hạng trong cuộc đua này.
+            </p>
+
+            <h3 class="text-2xl font-serif font-semibold text-gray-800 mt-6 mb-3" style="font-family: 'Times New Roman', Times, serif;">2.3 So sánh hiệu suất tiêm</h3>
+            
+            <figure class="my-8">
+                <img src="{{ url_for('static', path='images/efficiency_20.png') }}" alt="Top 20 các quốc gia dẫn đầu về hiệu suất tiêm chủng" class="w-full h-auto rounded-sm shadow-sm border border-gray-100">
+                <figcaption>Top 20 các quốc gia dẫn đầu về hiệu suất tiêm chủng</figcaption>
+            </figure>
+
+            <p class="mb-4">Dựa vào bảng xếp hạng trên, nhóm có một số đánh giá như sau:</p>
+
+            <ul class="list-disc list-outside ml-5 space-y-2 mb-8">
+                <li>Có thể thấy rằng 6 trong Top 8 quốc gia dẫn đầu đều thuộc Châu Á (Nhật, Hàn, Thái, Việt, Trung, Đài Loan). Điều này cho thấy mô hình chống dịch tại Châu Á dựa trên sự kỷ luật cộng đồng và khả năng huy động tổng lực (Chính phủ, quân đội, y tế tư nhân) hiệu quả hơn hẳn so với phương Tây trong các chiến dịch quy mô lớn. Nhật Bản và Hàn Quốc dù khởi động chậm nhưng khi tăng tốc đã tạo ra những kỷ lục thế giới.</li>
+                <li>Việt Nam chúng ta xếp hạng 6 đứng trên cả Trung Quốc (hạng 7) và Đức (hạng 13). Đây chính là minh chứng cho chiến dịch tiêm chủng vắc-xin phòng COVID-19 thần tốc ở nước ta. Bên cạnh đó, người bạn Cuba của chúng ta có xếp hạng cao (hạng 3) trong bảng xếp hạng này nhờ vào việc tự chủ vắc-xin và mạng lưới cơ sở y tế lớn. Một bất ngờ khác chính là người hàng xóm Campuchia (hạng 16), mặc dù là một nước nhỏ, nghèo nhưng vẫn đạt hiệu suất cao nhờ chiến lược ngoại giao linh hoạt.</li>
+                <li>Các nước có tiềm lực kinh tế, cơ sở, kỹ thuật y tế mạnh như Mỹ, Nga, Ấn Độ đều không nằm trong bảng xếp hạng trên. Kể cả các nước châu Âu như Đức, Anh, Tây Ban Nha dù nằm trong top 20 nhưng không thống trị bảng xếp hạng như dự đoán ban đầu.</li>
+            </ul>
         </section>
 
         <!-- Phần 3: Hiệu quả vắc-xin -->
         <section>
-            <h2 class="text-3xl font-serif font-bold text-gray-900 mb-4">3. Hiệu quả vắc-xin</h2>
+            <h2 class="text-3xl font-serif font-bold text-gray-900 mb-4" style="font-family: 'Times New Roman', Times, serif;">3. Hiệu quả vắc-xin</h2>
             <p class="mb-4">
                 Ở đây nhóm tác giả không muốn tính toán hiệu quả của vắc-xin thực sự (ví dụ hiệu quả 95%) mà là đo lường sự tương quan: "Khi tỉ lệ tiêm chủng trong dân số tăng lên, số ca mắc mới trong cùng dân số đó có giảm xuống hay không?"
             </p>
@@ -118,7 +166,7 @@
 
             <figure class="my-8">
                 <img src="{{ url_for('static', path='images/reg_plot_vac_rate_case_rate.png') }}" alt="Biểu đồ phân tán" class="w-full h-auto rounded-sm shadow-sm border border-gray-100">
-                <figcaption class="text-center text-sm text-gray-500 mt-2 italic font-serif">Biểu đồ phân tán giữa tỷ lệ tiêm chủng vs tỷ lệ nhiễm mới</figcaption>
+                <figcaption>Biểu đồ phân tán giữa tỷ lệ tiêm chủng vs tỷ lệ nhiễm mới</figcaption>
             </figure>
 
             <div class="space-y-4 mb-8">
@@ -139,7 +187,7 @@
 
             <figure class="my-8">
                 <img src="{{ url_for('static', path='images/reg_plot_vac_rate_case_rate_1.png') }}" alt="Biểu đồ phân tán X > 1" class="w-full h-auto rounded-sm shadow-sm border border-gray-100">
-                <figcaption class="text-center text-sm text-gray-500 mt-2 italic font-serif">Biểu đồ phân tán giữa tỷ lệ tiêm chủng vs tỷ lệ nhiễm mới với X > 1</figcaption>
+                <figcaption>Biểu đồ phân tán giữa tỷ lệ tiêm chủng vs tỷ lệ nhiễm mới với X > 1</figcaption>
             </figure>
 
             <p class="mb-8">
@@ -156,7 +204,7 @@
 
         <!-- Phần 4: Tác động theo giới tính và độ tuổi -->
         <section>
-            <h2 class="text-3xl font-serif font-bold text-gray-900 mb-4">4. Tác động theo giới tính và độ tuổi</h2>
+            <h2 class="text-3xl font-serif font-bold text-gray-900 mb-4" style="font-family: 'Times New Roman', Times, serif;">4. Tác động theo giới tính và độ tuổi</h2>
             <p class="mb-4">
                 Để xem xét xu hướng dịch bệnh, ta cần có các số liệu liên quan đến số ca nhiễm mới, số ca tử vong theo giới tính và độ tuổi. Ta tính số liệu bằng cách tính tổng số liệu về ca nhiễm mới, số ca tử vong, số ca tiêm ngừa theo giới tính ở từng độ tuổi.
             </p>
@@ -168,15 +216,15 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
                 <figure>
                     <img src="{{ url_for('static', path='images/deathstotal_sex by age group.png') }}" alt="Số tử vong" class="w-full h-auto rounded shadow-sm">
-                    <figcaption class="text-center text-sm text-gray-500 mt-2 italic">Số tử vong trong từng độ tuổi</figcaption>
+                    <figcaption>Số tử vong trong từng độ tuổi</figcaption>
                 </figure>
                 <figure>
                     <img src="{{ url_for('static', path='images/casestotal_sex by age group.png') }}" alt="Số ca nhiễm" class="w-full h-auto rounded shadow-sm">
-                    <figcaption class="text-center text-sm text-gray-500 mt-2 italic">Số ca nhiễm trong từng độ tuổi</figcaption>
+                    <figcaption>Số ca nhiễm trong từng độ tuổi</figcaption>
                 </figure>
             </div>
 
-            <h3 class="text-2xl font-serif font-semibold text-gray-800 mt-6 mb-3">4.1 Phân bố ca nhiễm trong độ tuổi theo giới tính</h3>
+            <h3 class="text-2xl font-serif font-semibold text-gray-800 mt-6 mb-3" style="font-family: 'Times New Roman', Times, serif;">4.1 Phân bố ca nhiễm trong độ tuổi theo giới tính</h3>
             <ul class="list-disc list-outside ml-5 mb-6">
                 <li><strong>Input:</strong> caseF, caseM, age_group.</li>
                 <li><strong>Phương pháp:</strong> Chuẩn hóa số cases của các nhóm tuổi thành tỉ lệ, trực quan hóa bằng biểu đồ quạt (pie chart).</li>
@@ -201,7 +249,7 @@
                 </ul>
             </div>
 
-            <h3 class="text-2xl font-serif font-semibold text-gray-800 mt-6 mb-3">4.2 Chênh lệch tỷ lệ tử vong theo giới tính</h3>
+            <h3 class="text-2xl font-serif font-semibold text-gray-800 mt-6 mb-3" style="font-family: 'Times New Roman', Times, serif;">4.2 Chênh lệch tỷ lệ tử vong theo giới tính</h3>
             <ul class="list-disc list-outside ml-5 mb-4">
                 <li><strong>Input:</strong> country, deathsM, deathsF, populationM, populationF</li>
                 <li><strong>Phương pháp:</strong> Chuẩn hóa theo dân số, tính hiệu chênh lệch, vẽ bar chart thể hiện “gender gap”.</li>
@@ -209,7 +257,7 @@
 
             <figure class="my-8">
                 <img src="{{ url_for('static', path='images/gender_gap.png') }}" alt="Gender Gap" class="w-full h-auto rounded-sm shadow-sm border border-gray-100">
-                <figcaption class="text-center text-sm text-gray-500 mt-2 italic font-serif">Chênh lệch tỷ lệ tử vong theo giới tính tại các quốc gia</figcaption>
+                <figcaption>Chênh lệch tỷ lệ tử vong theo giới tính tại các quốc gia</figcaption>
             </figure>
 
             <div class="space-y-2 mb-8">
@@ -223,7 +271,7 @@
 
         <!-- Phần 5 -->
         <section class="pb-12">
-            <h2 class="text-3xl font-serif font-bold text-gray-900 mb-4">5. Chênh lệch giới tính/ độ tuổi trong chiến dịch tiêm chủng</h2>
+            <h2 class="text-3xl font-serif font-bold text-gray-900 mb-4" style="font-family: 'Times New Roman', Times, serif;">5. Chênh lệch giới tính/ độ tuổi trong chiến dịch tiêm chủng</h2>
             <ul class="list-disc list-outside ml-5 mb-4">
                 <li><strong>Input:</strong> sum_vacsF (tổng quốc gia), sum_vacsM (tổng quốc gia), age group</li>
                 <li><strong>Phương pháp:</strong> So sánh tỷ lệ tiêm giữa nam và nữ trong từng nhóm tuổi.</li>
@@ -231,7 +279,7 @@
 
             <figure class="my-8">
                 <img src="{{ url_for('static', path='images/vac_gap.png') }}" alt="Vaccine Gap" class="w-full h-auto rounded-sm shadow-sm border border-gray-100">
-                <figcaption class="text-center text-sm text-gray-500 mt-2 italic font-serif">Chênh lệch giới tính/độ tuổi trong chiến dịch tiêm chủng</figcaption>
+                <figcaption>Chênh lệch giới tính/độ tuổi trong chiến dịch tiêm chủng</figcaption>
             </figure>
 
             <div class="space-y-2 mb-8">

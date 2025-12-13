@@ -3,7 +3,10 @@
 
 python -m venv venv
 
-venv\Scripts\activate #for window
+for window
+
+venv\Scripts\activate 
+
 ## Create variable enviroment
 create .env file contain
 MONGO_URI= <your-mongouri>

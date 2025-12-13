@@ -1,7 +1,10 @@
 from app.ml_engine import predictor
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 # This is the connection string you provided
-DB_CONNECTION = "mongodb+srv://minhquannguyendo0705_db_user:12345@cluster0.kgz4rtm.mongodb.net/?appName=Cluster0"
+DB_CONNECTION = os.getenv("DB_CONNECTION", "mongodb://localhost:27017")
 
 if __name__ == "__main__":
     print("--- Starting Batch Training Process for ALL Countries ---")
