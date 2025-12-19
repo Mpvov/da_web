@@ -6,10 +6,17 @@
     <div class="bg-white shadow-xl rounded-2xl overflow-hidden flex flex-col md:flex-row">
         
         <!-- Left Side: Input Form -->
-        <div class="w-full md:w-1/2 p-8">
-            <div class="mb-6">
-                <h2 class="text-2xl font-bold text-gray-900">Dự đoán khả năng bùng phát dịch COVID-19 theo quốc gia</h2>
-                <p class="text-sm text-gray-500 mt-1">Nhập dữ liệu vào bên dưới</p>
+        <div class="w-full md:w-1/2 p-8 border-r border-gray-100">
+            <div class="mb-6 flex justify-between items-start">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900">Dự đoán khả năng bùng phát dịch COVID-19 theo quốc gia</h2>
+                    <p class="text-sm text-gray-500 mt-1">Chọn phương thức nhập liệu</p>
+                </div>
+                <!-- Input Mode Toggle -->
+                <div class="flex bg-gray-100 p-1 rounded-lg">
+                    <button onclick="switchMode('manual')" id="btn-manual" class="px-3 py-1 text-xs font-bold rounded-md bg-white shadow text-indigo-600 transition-all">Thủ công</button>
+                    <button onclick="switchMode('auto')" id="btn-auto" class="px-3 py-1 text-xs font-bold rounded-md text-gray-500 hover:text-gray-700 transition-all">Dữ liệu thô</button>
+                </div>
             </div>
 
             <form id="mlForm" class="space-y-4">
@@ -251,37 +258,64 @@
                     </select>
                 </div>
 
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Trung bình số ca hiện tại (tính theo 7 ngày)</label>
-                    <input type="number" id="current_avg" step="0.1" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2" placeholder="e.g., 100">
+                <!-- Raw Data Input (Hidden by default) -->
+                <div id="auto-input-container" class="hidden">
+                    <label class="block text-sm font-medium text-gray-700">Dữ liệu (Theo ngày)</label>
+                    <p class="text-xs text-gray-500 mb-2">Dán danh sách số ca mắc hàng ngày (ít nhất 21 ngày). Phân cách bằng dấu phẩy hoặc xuống dòng.</p>
+                    <textarea id="raw_data" rows="5" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border font-mono" placeholder="100, 120, 150..."></textarea>
+                    <!-- Auto-calculated display -->
+                    <div class="bg-gray-50 p-3 rounded text-xs text-gray-600 space-y-1">
+                        <div class="flex justify-between">
+                            <span>Tăng trưởng (7 ngày):</span>
+                            <span id="disp_growth_7d_2" class="font-mono">--</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Tăng trưởng (14 ngày):</span>
+                            <span id="disp_growth_14d_2" class="font-mono">--</span>
+                        </div>
+                    </div>
+                    <button type="button" onclick="calculateFromRaw()" class="mt-2 w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none">
+                        Tự động tính toán
+                    </button>
                 </div>
 
-                <div class="grid grid-cols-2 gap-4">
+                <!-- Manual Inputs (Visible by default) -->
+                <div id="manual-input-container" class="space-y-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Dữ liệu số ca mắc tuần trước</label>
-                        <input type="number" id="lag_7" step="0.1" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2" placeholder="e.g., 80">
+                        <label class="block text-sm font-medium text-gray-700">Trung bình số ca hiện tại (tính theo 7 ngày)</label>
+                        <input type="number" id="current_avg" step="0.1" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2" placeholder="Ví dụ: 100">
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Dữ liệu số ca mắc 2 tuần trước</label>
-                        <input type="number" id="lag_14" step="0.1" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2" placeholder="e.g., 50">
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Dữ liệu số ca mắc tuần trước</label>
+                            <input type="number" id="lag_7" step="0.1" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2" placeholder="Ví dụ: 80">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Dữ liệu số ca mắc 2 tuần trước</label>
+                            <input type="number" id="lag_14" step="0.1" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm border p-2" placeholder="Ví dụ: 50">
+                        </div>
                     </div>
+                        <!-- Auto-calculated display -->
+                    <div class="bg-gray-50 p-3 rounded text-xs text-gray-600 space-y-1">
+                        <div class="flex justify-between">
+                            <span>Tăng trưởng (7 ngày):</span>
+                            <span id="disp_growth_7d_1" class="font-mono">--</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Tăng trưởng (14 ngày):</span>
+                            <span id="disp_growth_14d_1" class="font-mono">--</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition-colors">
+                        Dự đoán
+                    </button>
                 </div>
 
-                <!-- Auto-calculated display -->
-                <div class="bg-gray-50 p-3 rounded text-xs text-gray-600 space-y-1">
-                    <div class="flex justify-between">
-                        <span>Tăng (7d):</span>
-                        <span id="disp_growth_7d" class="font-mono">--</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span>Tăng (14d):</span>
-                        <span id="disp_growth_14d" class="font-mono">--</span>
-                    </div>
-                </div>
+                
 
-                <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition-colors">
-                    Dự đoán
-                </button>
+                
             </form>
         </div>
 
@@ -292,7 +326,7 @@
             
             <div id="initialState" class="text-center opacity-75">
                 <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-                <p>Nhập dữ liệu và nhấn dự đoán để xem phân tích</p>
+                <p>Nhập dữ liệu và nhấn dự đoán để xem phân tích.</p>
             </div>
 
             <div id="resultBox" class="hidden relative z-10">
@@ -315,7 +349,99 @@
     </div>
 </div>
 
+<!-- Simple Modal for Notices -->
+<div id="modalNotice" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <div class="mt-3 text-center">
+            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modalTitle">Thông báo</h3>
+            <div class="mt-2 px-7 py-3">
+                <p class="text-sm text-gray-500" id="modalBody">...</p>
+            </div>
+            <div class="items-center px-4 py-3">
+                <button id="okBtn" class="px-4 py-2 bg-indigo-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-300">
+                    Đóng
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
+    // --- MODE SWITCHING ---
+    function switchMode(mode) {
+        const manualDiv = document.getElementById('manual-input-container');
+        const autoDiv = document.getElementById('auto-input-container');
+        const btnManual = document.getElementById('btn-manual');
+        const btnAuto = document.getElementById('btn-auto');
+
+        if (mode === 'manual') {
+            manualDiv.classList.remove('hidden');
+            autoDiv.classList.add('hidden');
+            btnManual.classList.add('bg-white', 'shadow', 'text-indigo-600');
+            btnManual.classList.remove('text-gray-500');
+            btnAuto.classList.remove('bg-white', 'shadow', 'text-indigo-600');
+            btnAuto.classList.add('text-gray-500');
+        } else {
+            manualDiv.classList.add('hidden');
+            autoDiv.classList.remove('hidden');
+            btnAuto.classList.add('bg-white', 'shadow', 'text-indigo-600');
+            btnAuto.classList.remove('text-gray-500');
+            btnManual.classList.remove('bg-white', 'shadow', 'text-indigo-600');
+            btnManual.classList.add('text-gray-500');
+        }
+    }
+
+    // --- RAW DATA CALCULATION ---
+    function calculateFromRaw() {
+        const raw = document.getElementById('raw_data').value;
+        // Split by comma, newline, or space, then filter empty strings and convert to float
+        const data = raw.split(/[\n,]+/).map(x => parseFloat(x.trim())).filter(x => !isNaN(x));
+
+        if (data.length < 21) {
+            showModal("Thiếu dữ liệu", "Vui lòng nhập ít nhất 21 ngày dữ liệu để tính toán chính xác 3 chỉ số trung bình động.");
+            return;
+        }
+
+        // Logic:
+        // Current Avg = Avg of last 7 days (index: len-7 to len)
+        // Last Week Avg = Avg of 7 days before that (index: len-14 to len-7)
+        // 2 Weeks Ago Avg = Avg of 7 days before that (index: len-21 to len-14)
+
+        const len = data.length;
+        
+        const currentSlice = data.slice(len - 7, len);
+        const lag7Slice = data.slice(len - 14, len - 7);
+        const lag14Slice = data.slice(len - 21, len - 14);
+
+        const avg = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
+
+        const curAvg = avg(currentSlice);
+        const l7Avg = avg(lag7Slice);
+        const l14Avg = avg(lag14Slice);
+
+        // Fill inputs
+        document.getElementById('current_avg').value = curAvg.toFixed(1);
+        document.getElementById('lag_7').value = l7Avg.toFixed(1);
+        document.getElementById('lag_14').value = l14Avg.toFixed(1);
+
+        // Trigger growth calculation
+        calculateGrowth();
+        
+        // Switch back to manual view to show results
+        switchMode('manual');
+        showModal("Thành công", "Đã tính toán xong các chỉ số trung bình động từ dữ liệu thô.");
+    }
+
+    // --- MODAL LOGIC ---
+    const modal = document.getElementById('modalNotice');
+    const okBtn = document.getElementById('okBtn');
+    okBtn.onclick = function() { modal.classList.add('hidden'); }
+    function showModal(title, body) {
+        document.getElementById('modalTitle').innerText = title;
+        document.getElementById('modalBody').innerText = body;
+        modal.classList.remove('hidden');
+    }
+
+    // --- EXISTING LOGIC ---
     // Auto calculate growth for display
     const inputs = ['current_avg', 'lag_7', 'lag_14'];
     inputs.forEach(id => {
@@ -336,17 +462,19 @@
             el.className = val > 0 ? 'font-mono text-red-600 font-bold' : 'font-mono text-green-600 font-bold';
         };
 
-        setGrowth('disp_growth_7d', g7);
-        setGrowth('disp_growth_14d', g14);
+        setGrowth('disp_growth_7d_1', g7);
+        setGrowth('disp_growth_14d_1', g14);
+        setGrowth('disp_growth_7d_2', g7);
+        setGrowth('disp_growth_14d_2', g14);
     }
 
     // Handle Submission
     document.getElementById('mlForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        const btn = this.querySelector('button');
+        const btn = this.querySelector('button[type="submit"]');
         const originalText = btn.innerText;
-        btn.innerText = "Analyzing...";
+        btn.innerText = "Đang xử lý...";
         btn.disabled = true;
 
         try {
@@ -385,7 +513,7 @@
             }
 
         } catch (error) {
-            alert('Error: ' + error.message);
+            alert('Lỗi: ' + error.message);
         } finally {
             btn.innerText = originalText;
             btn.disabled = false;
