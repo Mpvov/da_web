@@ -293,8 +293,8 @@
                     Để xem xét xu hướng dịch bệnh, ta cần có các số liệu liên quan đến số ca nhiễm mới, số ca tử vong theo giới tính và độ tuổi. Ta tính số liệu bằng cách tính tổng số liệu về ca nhiễm mới, số ca tử vong, số ca tiêm ngừa theo giới tính ở từng độ tuổi.
                 </p>
                 <div class="bg-gray-100 p-2 rounded font-mono text-sm mb-6 inline-block">
-                    SUM(CasesM) AS TotalCases_Male,<br>
-                    SUM(CasesF) AS TotalCases_Female
+                    SUM(CasesM) (Tổng số các ca theo giới tính nam) AS TotalCases_Male,<br>
+                    SUM(CasesF) (Tổng số các ca theo giới tính nữ) AS TotalCases_Female
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
@@ -310,7 +310,7 @@
 
                 <h3 id="sec-4-1" class="text-2xl font-serif font-semibold text-gray-800 mt-6 mb-3 scroll-mt-32" style="font-family: 'Times New Roman', Times, serif;">4.1 Phân bố ca nhiễm trong độ tuổi theo giới tính</h3>
                 <ul class="list-disc list-outside ml-5 mb-6">
-                    <li><strong>Input:</strong> caseF, caseM, age_group.</li>
+                    <li><strong>Input:</strong> caseF (số ca theo nữ), caseM (số ca theo nam), age_group.</li>
                     <li><strong>Phương pháp:</strong> Chuẩn hóa số cases của các nhóm tuổi thành tỉ lệ, trực quan hóa bằng biểu đồ quạt (pie chart).</li>
                 </ul>
 
@@ -335,7 +335,7 @@
 
                 <h3 id="sec-4-2" class="text-2xl font-serif font-semibold text-gray-800 mt-6 mb-3 scroll-mt-32" style="font-family: 'Times New Roman', Times, serif;">4.2 Chênh lệch tỷ lệ tử vong theo giới tính</h3>
                 <ul class="list-disc list-outside ml-5 mb-4">
-                    <li><strong>Input:</strong> country, deathsM, deathsF, populationM, populationF</li>
+                    <li><strong>Input:</strong> country, deathsM (số ca tử vong theo nam), deathsF (số ca tử vong theo nữ), populationM (tổng dân số nam), populationF (tổng dân số nữ)</li>
                     <li><strong>Phương pháp:</strong> Chuẩn hóa theo dân số, tính hiệu chênh lệch, vẽ bar chart thể hiện “gender gap”.</li>
                 </ul>
 
@@ -357,7 +357,7 @@
             <section id="sec-5" class="scroll-mt-32">
                 <h2 class="text-3xl font-serif font-bold text-gray-900 mb-4" style="font-family: 'Times New Roman', Times, serif;">5. Chênh lệch giới tính/ độ tuổi trong chiến dịch tiêm chủng</h2>
                 <ul class="list-disc list-outside ml-5 mb-4">
-                    <li><strong>Input:</strong> sum_vacsF (tổng quốc gia), sum_vacsM (tổng quốc gia), age group</li>
+                    <li><strong>Input:</strong> sum_vacsF (tổng vacxin mà nữ đã tiêm) (tổng tất cả các quốc gia), sum_vacsM (tổng vacxin mà nam đã tiêm) (tổng tất cả các quốc gia), age group</li>
                     <li><strong>Phương pháp:</strong> So sánh tỷ lệ tiêm giữa nam và nữ trong từng nhóm tuổi.</li>
                 </ul>
 
@@ -386,6 +386,10 @@
                     <li><strong>Bất bình đẳng và nỗ lực quốc gia:</strong> Bản đồ tiêm chủng cho thấy sự chênh lệch rõ ràng các khu vực, với Châu Phi là "vùng trũng". Ngược lại, Việt Nam là điểm sáng nổi bật, vượt qua nhiều cường quốc nhờ chiến lược huy động tổng lực và kỷ luật cộng đồng.</li>
                     <li><strong>Dân số:</strong> Nhóm tuổi 20-49 chiếm tỷ lệ nhiễm cao nhất và chênh lệch tử vong giữa nam và nữ là không đáng kể, bác bỏ giả thuyết giới tính là yếu tố ảnh hưởng mạnh đến tỷ lệ tử vong.</li>
                 </ul>
+            </section>
+
+            <section id="padding" class="pb-12 border-gray-200 pt-10 mt-10">
+
             </section>
         </article>
     </main>
